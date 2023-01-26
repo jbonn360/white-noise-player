@@ -8,10 +8,11 @@ import com.whitenoiseplayer.app.player.AudioPlayer;
 @Component
 public class VolumeManager implements Runnable {
 	private final AudioPlayer player;
-	private final 
+	private final WeeklySchedule schedule;
 	
-	public VolumeManager(@Autowired AudioPlayer player) {
+	public VolumeManager(@Autowired AudioPlayer player, @Autowired WeeklySchedule schedule) {
 		this.player = player;
+		this.schedule = schedule;
 	}
 
 	@Override
