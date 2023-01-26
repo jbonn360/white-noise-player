@@ -1,0 +1,40 @@
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<!-- <link rel="icon" type="image/x-icon" href="img/favicon.ico" /> -->
+<title>Home</title>
+
+<!-- JS -->
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script th:inline="javascript">
+	var audioPlayerState = [[${audioPlayerState}]];
+</script>
+<script type="text/javascript" src="js/src/home.js"></script>
+
+<!-- CSS -->
+<link rel="stylesheet" href="css/style.css" />
+
+</head>
+<body>
+	<div id='mainContainer'>
+		<header>
+			<div class="title">
+				<span>White Noise Player</span>
+			</div>
+		</header>
+		<main>
+			<div class="controls">
+				<input id="rngVolume" type="range" min="1" max="100"
+					th:value="${100}" class="slider"
+					onchange="postVolumeChange(this.value)"
+					ontouchstart="disablePageDrag()">
+				</th:input>
+				<button id="btnToggleAudioPlayer"
+					onclick="toggleMasterSwitch(this.id)">START</button>
+			</div>
+		</main>
+	</div>
+</body>
+</html>
