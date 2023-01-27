@@ -1,10 +1,14 @@
 package com.whitenoiseplayer.app.volume;
 
+import static com.whitenoiseplayer.app.util.Util.toSysDefault;
+
 import java.time.DayOfWeek;
 import java.time.Instant;
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
@@ -13,10 +17,10 @@ import com.whitenoiseplayer.app.player.AudioPlayer;
 import com.whitenoiseplayer.app.schedule.SleepTime;
 import com.whitenoiseplayer.app.schedule.WeeklySchedule;
 
-import static com.whitenoiseplayer.app.util.Util.toSysDefault;
-
 @Component
-public class VolumeManager implements Runnable {
+public class VolumeManager implements Runnable {	
+	private final static Logger LOG = LoggerFactory.getLogger(VolumeManager.class);
+	
 	private final AudioPlayer player;
 	private final VolumeManagerExecutor volumeManagerExecutor;
 
@@ -33,10 +37,14 @@ public class VolumeManager implements Runnable {
 
 	@Override
 	public void run() {
-		final ZonedDateTime now = toSysDefault(Instant.now());
+		final ZonedDateTime now = toSysDefault(Instant.now());		
 		
-		player.setVolume(schedule.getScheduledVolume(now, isSleepTime(now)));
+		// set volume to new level according to current time
+		final double newVolume = schedule.getScheduledVolume(now, isSleepTime(now));		
+		LOG.info(String.format("Setting volume to %.6f", newVolume));		
+		player.setVolume(newVolume);
 		
+		// ensure that player is in the correct state
 		if(player.getVolume() <= 0d && player.isPlaying()) 
 			player.stopAudio();
 		else if(player.getVolume() > 0d && !player.isPlaying())
@@ -50,7 +58,7 @@ public class VolumeManager implements Runnable {
 		ZonedDateTime nextTopOfHour = getNextTopOfHour(now);
 
 		if (isInFadeInOutZone(now)) {
-			ZonedDateTime fiveMinutesFromNow = now.plus(5, ChronoUnit.MINUTES);
+			ZonedDateTime fiveMinutesFromNow = now.plus(1, ChronoUnit.MINUTES);
 			return fiveMinutesFromNow.isBefore(nextTopOfHour) ? fiveMinutesFromNow : nextTopOfHour;
 		} else {
 			if (schedule.getLastScheduledVolume(now) > 0)

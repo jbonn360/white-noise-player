@@ -27,7 +27,7 @@
 		<main>
 			<div class="controls">
 				<input id="rngVolume" type="range" min="1" max="100"
-					th:value="${100}" class="slider"
+					th:value="${masterVolumeLevel * 100}" class="slider"
 					onchange="postVolumeChange(this.value)"
 					ontouchstart="disablePageDrag()">
 				</th:input>

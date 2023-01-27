@@ -11,20 +11,27 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class VolumeManagerExecutor {
-	private final ScheduledExecutorService executor;
+	private ScheduledExecutorService executor;
 	private final VolumeManager volumeManager;
 	
 	public VolumeManagerExecutor(@Autowired VolumeManager volumeManager) {
-		executor = Executors.newScheduledThreadPool(1);
+		executor = initExecutor();
 		this.volumeManager = volumeManager;
 	}
 	
 	public void executeAt(ZonedDateTime target) {
+		if(executor.isShutdown())
+			executor = initExecutor();
+		
 		long millisToTarget = ZonedDateTime.now().until(target, ChronoUnit.MILLIS);		
 		executor.schedule(volumeManager, millisToTarget, TimeUnit.MILLISECONDS);
 	}
 	
 	public void clearSchedule() {
 		executor.shutdownNow();
+	}
+	
+	private ScheduledExecutorService initExecutor() {
+		return Executors.newScheduledThreadPool(1);
 	}
 }

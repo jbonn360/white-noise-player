@@ -34,4 +34,12 @@ public class AudioPlayerService {
 	public void setPlayerVolume(double volume) {
 		audioPlayer.setVolume(volume);
 	}
+	
+	public double getPlayerMasterVolume() {
+		return this.audioPlayer.getMasterVolumeMultiplier();
+	}
+	
+	public boolean isPlayerActive() {
+		return this.audioPlayer.isPlaying();
+	}
 }

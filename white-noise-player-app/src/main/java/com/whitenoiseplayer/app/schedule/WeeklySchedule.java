@@ -26,9 +26,9 @@ public class WeeklySchedule {
 		double lastVolume = getLastScheduledVolume(currentTime);
 		double nextVolume = getNextScheduledVolume(currentTime);
 		
-		// if no fade in/out needed, then just switch to the next volume
+		// if no fade in/out needed, then just switch to the last volume
 		if(!fadeInOut)
-			return nextVolume;
+			return lastVolume;
 		
 		// if next volume is same, just return same volume
 		if(lastVolume == nextVolume)
@@ -37,7 +37,7 @@ public class WeeklySchedule {
 		// if next volume is different, we need to calculate the correct level
 		// at this point in time
 		int minutesSinceLastHour = currentTime.getMinute();		
-		double curVolumeChange = (minutesSinceLastHour / 60) * ( nextVolume - lastVolume );
+		double curVolumeChange = ((double)minutesSinceLastHour / 60) * ( nextVolume - lastVolume );
 		
 		return lastVolume + curVolumeChange;
 	}
@@ -79,7 +79,7 @@ public class WeeklySchedule {
 			JSONArray subArray = (JSONArray)array.get(i);
 			
 			for(int j = 0; j < subArray.length(); j++) 
-				result[i][j] = subArray.getInt(j);			
+				result[i][j] = subArray.getDouble(j);	
 		}
 		
 		return result;

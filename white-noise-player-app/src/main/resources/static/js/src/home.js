@@ -22,7 +22,7 @@ function toggleMasterSwitch(buttonId) {
 }
 
 function setMasterButtonToStopMode(button) {
-	button.css('background-color', 'red');
+	button.css('background-color', '#3e2828');
 	button.text('STOP');
 }
 
@@ -32,13 +32,25 @@ function setMasterButtonToStartMode(button) {
 }
 
 function postMasterSwitchState(state){
-	$.post('setAudioPlayerState', { state });
+	//$.patch('audioPlayerState', { state });
+	
+	$.ajax({
+		url: 'audioPlayerState',
+		type: 'PATCH',
+		data: { 'state' : state }
+	});
 }
 
 function postVolumeChange(value){
 	var newVolume = value / 100;	
 	
-	$.post('setVolume', { 'volume' : newVolume });
+	//$.patch('masterVolume', { 'volume' : newVolume });
+	
+	$.ajax({
+		url: 'masterVolume',
+		type: 'PATCH',
+		data: { 'volume' : newVolume }
+	});
 }
 
 function disablePageDrag(){

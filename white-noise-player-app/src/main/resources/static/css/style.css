@@ -2,6 +2,7 @@ html, body{
 	font-size: calc(14px + 0.5vw);	
 	overflow-x: hidden !important;
 	position: relative;
+	background-color: #010409;
 }
 
 #mainContainer {
@@ -19,7 +20,7 @@ header {
 	flex-direction: column;
 	justify-content: flex-start;
 	align-items: center; 
-	margin-top: 10px;
+	margin-top: 10px;	
 }
 
 .title {
@@ -30,6 +31,7 @@ header {
 	flex-direction: row;
 	align-items: center;
 	text-align: center;
+	color: white;
 }
 
 span{
@@ -73,7 +75,7 @@ main .controls {
 	width: 13rem;
 	height: 13rem;
 	border-radius: 999px;
-	background-color: #4dff00;
+	background-color: #161b22;
 	font-size: 2.5rem;
 	color: white;
 	border: none;
@@ -110,7 +112,7 @@ main .controls {
   appearance: none;
   width: 30px;
   height: 30px;
-  background: #4dff00;
+  background: #161b22;
   cursor: pointer;
   border-radius: 999px;
 }
@@ -118,7 +120,7 @@ main .controls {
 .slider::-moz-range-thumb {
   width: 25px;
   height: 25px;
-  background: #4dff00;
+  background: #161b22;
   cursor: pointer;
 }
 

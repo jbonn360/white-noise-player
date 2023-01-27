@@ -9,5 +9,9 @@ public interface AudioPlayer {
 	
 	public void setVolume(double volume);
 	
+	public double getMasterVolumeMultiplier();
+	
+	public void setMasterVolumeMultiplier(double volume);
+	
 	public boolean isPlaying();
 }

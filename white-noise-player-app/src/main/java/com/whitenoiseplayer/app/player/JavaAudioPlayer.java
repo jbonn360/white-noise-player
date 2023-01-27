@@ -18,10 +18,13 @@ import javafx.scene.media.MediaPlayer;
 public class JavaAudioPlayer implements AudioPlayer {
 	private final static Logger LOG = LoggerFactory.getLogger(JavaAudioPlayer.class);
 
-	private final MediaPlayer mediaPlayer;	
+	private final MediaPlayer mediaPlayer;
 	private boolean isPlaying;
 
-	public JavaAudioPlayer(@Value("classpath:static/audio/track.mp3") final Resource audioFileResource) {		
+	private double masterVolumeMultiplier;
+
+	public JavaAudioPlayer(@Value("classpath:static/audio/track.mp3") final Resource audioFileResource,
+			@Value("${app.player.start-master-volume-level}") final double masterVolumeLevel) {
 		Optional<URI> audioFileURI = Optional.empty();
 		try {
 			audioFileURI = Optional.ofNullable(audioFileResource.getURI());
@@ -30,22 +33,23 @@ public class JavaAudioPlayer implements AudioPlayer {
 		}
 
 		// needed for the media player to be able to play audio
-		new JFXPanel(); 
-		
-		this.mediaPlayer = audioFileURI.map(URI::toString).map(Media::new).map(MediaPlayer::new).orElseThrow();		
-		this.mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);		
+		new JFXPanel();
+
+		this.masterVolumeMultiplier = masterVolumeLevel;
+		this.mediaPlayer = audioFileURI.map(URI::toString).map(Media::new).map(MediaPlayer::new).orElseThrow();
+		this.mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
 		this.isPlaying = false;
-		
-		//this.mediaPlayer.setVolume(1d);
+
+		// this.mediaPlayer.setVolume(1d);
 	}
 
 	@Override
 	public void playAudio() {
 		this.mediaPlayer.stop();
-		this.mediaPlayer.play();		
+		this.mediaPlayer.play();
 		this.isPlaying = true;
 	}
-	
+
 	@Override
 	public void stopAudio() {
 		this.mediaPlayer.stop();
@@ -59,11 +63,21 @@ public class JavaAudioPlayer implements AudioPlayer {
 
 	@Override
 	public void setVolume(double volume) {
-		this.mediaPlayer.setVolume(volume);
+		this.mediaPlayer.setVolume(volume * masterVolumeMultiplier);
 	}
 
 	@Override
 	public boolean isPlaying() {
 		return this.isPlaying;
+	}
+
+	@Override
+	public void setMasterVolumeMultiplier(double volume) {
+		this.masterVolumeMultiplier = volume;
+	}
+
+	@Override
+	public double getMasterVolumeMultiplier() {
+		return this.masterVolumeMultiplier;
 	}
 }
