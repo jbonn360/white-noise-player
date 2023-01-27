@@ -28,7 +28,8 @@ public class VolumeManagerExecutor {
 	}
 	
 	public void clearSchedule() {
-		executor.shutdownNow();
+		if(!executor.isShutdown())
+			executor.shutdownNow();
 	}
 	
 	private ScheduledExecutorService initExecutor() {

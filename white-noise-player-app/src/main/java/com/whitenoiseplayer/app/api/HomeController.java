@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -25,6 +26,7 @@ public class HomeController {
 
 		modelAndView.addObject("audioPlayerState", audioPlayerService.isPlayerActive());
 		modelAndView.addObject("masterVolumeLevel", audioPlayerService.getPlayerMasterVolume());
+		modelAndView.addObject("playbackOverride", audioPlayerService.isPlaybackOverride());
 
 		return modelAndView;
 	}
@@ -39,5 +41,14 @@ public class HomeController {
 	@ResponseStatus(HttpStatus.OK)
 	public void setMasterVolume(double volume) {
 		audioPlayerService.setPlayerVolume(volume);
+	}
+	
+	@PatchMapping("/playbackOverride")
+	@ResponseStatus(HttpStatus.OK)
+	@ResponseBody
+	public boolean overridePlayback(boolean value) {
+		boolean buttonStatus = audioPlayerService.setPlaybackOverride(value);
+		
+		return buttonStatus;
 	}
 }

@@ -12,6 +12,7 @@ import com.whitenoiseplayer.app.volume.VolumeManagerExecutor;
 public class AudioPlayerService {
 	private final AudioPlayer audioPlayer;
 	private final VolumeManagerExecutor volumeManagerExecutor;
+	private boolean playbackOverride = false;	
 
 	public AudioPlayerService(@Autowired AudioPlayer audioPlayer, @Autowired VolumeManagerExecutor volumeManagerExecutor) {
 		this.audioPlayer = audioPlayer;		
@@ -19,9 +20,15 @@ public class AudioPlayerService {
 	}
 
 	public void switchStateTo(boolean state) {
-		if (state) 
-			volumeManagerExecutor.executeAt(ZonedDateTime.now());				
-		else {			
+		if (state) {
+			if(!playbackOverride)
+				volumeManagerExecutor.executeAt(ZonedDateTime.now());
+			else {
+				volumeManagerExecutor.clearSchedule();
+				audioPlayer.setVolume(1d);
+				audioPlayer.playAudio();
+			}				
+		} else {			
 			volumeManagerExecutor.clearSchedule();
 			audioPlayer.stopAudio();
 		}							
@@ -41,5 +48,29 @@ public class AudioPlayerService {
 	
 	public boolean isPlayerActive() {
 		return this.audioPlayer.isPlaying();
+	}
+	
+	public boolean isPlaybackOverride() {
+		return this.playbackOverride;
+	}
+
+	public boolean setPlaybackOverride(boolean value) {
+		this.playbackOverride = value;
+		
+		if(!value) {
+			audioPlayer.stopAudio();
+			//volumeManagerExecutor.executeAt(ZonedDateTime.now());
+			pause(100);
+		}
+		
+		return (!value) ? audioPlayer.isPlaying() : true;
+	}
+	
+	private void pause(long millis) {
+		try {
+			Thread.sleep(millis);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
 }

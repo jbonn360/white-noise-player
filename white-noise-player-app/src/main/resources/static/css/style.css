@@ -3,6 +3,7 @@ html, body{
 	overflow-x: hidden !important;
 	position: relative;
 	background-color: #010409;
+	font-family: 'Roboto', sans-serif;
 }
 
 #mainContainer {
@@ -80,6 +81,7 @@ main .controls {
 	color: white;
 	border: none;
 	opacity: 0.85;
+	font-family: inherit;
 }
 
 #btnToggleAudioPlayer:hover {
@@ -132,4 +134,15 @@ main .controls {
 ::selection {
     background-color: transparent;
     color: #000;
+}
+
+#chkOverride{
+	width: 1rem;
+	height: 1rem;
+}
+
+#chkLabel {
+	color: white;
+	font-size: 1rem;
+	vertical-align: middle;
 }

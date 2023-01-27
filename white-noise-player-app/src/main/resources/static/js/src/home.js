@@ -32,8 +32,6 @@ function setMasterButtonToStartMode(button) {
 }
 
 function postMasterSwitchState(state){
-	//$.patch('audioPlayerState', { state });
-	
 	$.ajax({
 		url: 'audioPlayerState',
 		type: 'PATCH',
@@ -43,9 +41,7 @@ function postMasterSwitchState(state){
 
 function postVolumeChange(value){
 	var newVolume = value / 100;	
-	
-	//$.patch('masterVolume', { 'volume' : newVolume });
-	
+		
 	$.ajax({
 		url: 'masterVolume',
 		type: 'PATCH',
@@ -55,4 +51,19 @@ function postVolumeChange(value){
 
 function disablePageDrag(){
 	$('html').attr('ontouchstart', '');
+}
+
+function sendOverrideRequest(value){	
+	$.ajax({
+		url: 'playbackOverride',
+		type: 'PATCH',
+		data: { 'value' : value },
+		success: function(result){
+    		var button = $('#btnToggleAudioPlayer');   		
+    		
+    		if(button.text() === 'STOP' && result == false){	
+				toggleMasterSwitch(button.attr('id'));			
+			}
+  		}
+	});
 }
