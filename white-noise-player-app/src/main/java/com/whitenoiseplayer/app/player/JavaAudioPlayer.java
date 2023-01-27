@@ -18,9 +18,10 @@ import javafx.scene.media.MediaPlayer;
 public class JavaAudioPlayer implements AudioPlayer {
 	private final static Logger LOG = LoggerFactory.getLogger(JavaAudioPlayer.class);
 
-	private final MediaPlayer mediaPlayer;
+	private final MediaPlayer mediaPlayer;	
+	private boolean isPlaying;
 
-	public JavaAudioPlayer(@Value("classpath:static/mp3/track.mp3") final Resource audioFileResource) {		
+	public JavaAudioPlayer(@Value("classpath:static/audio/track.mp3") final Resource audioFileResource) {		
 		Optional<URI> audioFileURI = Optional.empty();
 		try {
 			audioFileURI = Optional.ofNullable(audioFileResource.getURI());
@@ -31,29 +32,38 @@ public class JavaAudioPlayer implements AudioPlayer {
 		// needed for the media player to be able to play audio
 		new JFXPanel(); 
 		
-		this.mediaPlayer = audioFileURI.map(URI::toString).map(Media::new).map(MediaPlayer::new).orElseThrow();
-		this.mediaPlayer.setVolume(1d);
-		this.mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+		this.mediaPlayer = audioFileURI.map(URI::toString).map(Media::new).map(MediaPlayer::new).orElseThrow();		
+		this.mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);		
+		this.isPlaying = false;
+		
+		//this.mediaPlayer.setVolume(1d);
 	}
 
 	@Override
 	public void playAudio() {
-		mediaPlayer.stop();
-		mediaPlayer.play();		
+		this.mediaPlayer.stop();
+		this.mediaPlayer.play();		
+		this.isPlaying = true;
 	}
 	
 	@Override
 	public void stopAudio() {
-		mediaPlayer.stop();
+		this.mediaPlayer.stop();
+		this.isPlaying = false;
 	}
 
 	@Override
 	public double getVolume() {
-		return mediaPlayer.getVolume();
+		return this.mediaPlayer.getVolume();
 	}
 
 	@Override
 	public void setVolume(double volume) {
-		mediaPlayer.setVolume(volume);
+		this.mediaPlayer.setVolume(volume);
+	}
+
+	@Override
+	public boolean isPlaying() {
+		return this.isPlaying;
 	}
 }

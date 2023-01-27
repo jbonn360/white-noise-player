@@ -8,4 +8,6 @@ public interface AudioPlayer {
 	public double getVolume();
 	
 	public void setVolume(double volume);
+	
+	public boolean isPlaying();
 }
