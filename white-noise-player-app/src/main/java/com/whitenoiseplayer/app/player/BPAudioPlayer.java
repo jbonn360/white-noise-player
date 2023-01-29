@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 import javazoom.jlgui.basicplayer.BasicPlayer;
 import javazoom.jlgui.basicplayer.BasicPlayerException;
+import javazoom.jlgui.basicplayer.BasicPlayerListener;
 
 @Component
 public class BPAudioPlayer implements AudioPlayer {
@@ -29,7 +30,7 @@ public class BPAudioPlayer implements AudioPlayer {
 		this.masterVolumeMultiplier = masterVolumeLevel;
 		this.isPlaying = false;
 		this.player = new BasicPlayer();
-		initPlayer(soundTrackPath);
+		initPlayer(soundTrackPath);		
 	}
 	
 	private void initPlayer(String soundTrackPath) {		
@@ -41,6 +42,8 @@ public class BPAudioPlayer implements AudioPlayer {
 		} catch (BasicPlayerException | MalformedURLException e) {
 			LOG.error("Error occurred while initialising basic audio player", e);
 		}
+		
+		this.player.addBasicPlayerListener(new BPAudioPlayerLooper());		
 	}
 
 	@Override
