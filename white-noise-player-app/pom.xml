@@ -17,7 +17,7 @@
 		<java.version>17</java.version>
 	</properties>
 	
-	<repositories>
+	<!-- 	<repositories>
 		<repository>
 			<id>in-project</id>
 			<releases>
@@ -29,8 +29,8 @@
 			</snapshots>
 			<url>file://${project.basedir}/lib/</url>
 		</repository>
-	</repositories>
-	
+	</repositories> -->
+	 
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -42,15 +42,19 @@
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 
+		<!-- If having issues with jfx on rpi, check out this link: 
+		https://stackoverflow.com/questions/40606600/javafx-no-toolkit-found-exception-->
 		<dependency>
-			<groupId>org.openjfx</groupId>
-			<artifactId>javafx-media</artifactId>
-			<version>19.0.2.1</version>
+		    <groupId>org.openjfx</groupId>
+		    <artifactId>javafx-media</artifactId>
+		    <version>20-ea+11</version>
 		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/org.openjfx/javafx-swing -->
 		<dependency>
-			<groupId>org.openjfx</groupId>
-			<artifactId>javafx-swing</artifactId>
-			<version>19.0.2.1</version>
+		    <groupId>org.openjfx</groupId>
+		    <artifactId>javafx-swing</artifactId>
+		    <version>20-ea+11</version>
 		</dependency>
 		
 		<!-- https://mvnrepository.com/artifact/org.json/json -->
@@ -59,71 +63,14 @@
 		    <artifactId>json</artifactId>
 		    <version>20220924</version>
 		</dependency>
-
-
+		
+		<!-- https://mvnrepository.com/artifact/com.googlecode.soundlibs/basicplayer -->
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-devtools</artifactId>
-			<scope>runtime</scope>
-			<optional>true</optional>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
+		    <groupId>com.googlecode.soundlibs</groupId>
+		    <artifactId>basicplayer</artifactId>
+		    <version>3.0.0.0</version>
 		</dependency>
 	</dependencies>
-
-		<profiles>
-		<profile>
-			<id>aarch64</id>
-			<dependencies>
-				<!-- This uses the 64-bit version of the Open JavaFX libraries that is -->
-				<!-- compatible with ARM processor architectures like the PI's' -->
-				<!-- JARs downloaded from: https://gluonhq.com/products/javafx/ -->
-				<dependency>
-					<groupId>org.openjfx</groupId>
-					<artifactId>javafx-base-aarch64</artifactId>
-					<version>19.0.2.1</version>
-				</dependency>
-				<dependency>
-					<groupId>org.openjfx</groupId>
-					<artifactId>javafx-graphics-aarch64</artifactId>
-					<version>19.0.2.1</version>
-				</dependency>
-				<dependency>
-					<groupId>org.openjfx</groupId>
-					<artifactId>javafx-media-aarch64</artifactId>
-					<version>19.0.2.1</version>
-				</dependency>
-				<dependency>
-					<groupId>org.openjfx</groupId>
-					<artifactId>javafx-swing-aarch64</artifactId>
-					<version>19.0.2.1</version>
-				</dependency>
-			</dependencies>
-		</profile>
-		<profile>
-			<!-- This uses the 64-bit version of the Open JavaFX libraries that is not -->
-			<!-- compatible with the Raspberry PI's ARM32 architecture -->
-			<id>amd64</id>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
-			<dependencies>
-				<dependency>
-					<groupId>org.openjfx</groupId>
-					<artifactId>javafx-media</artifactId>
-					<version>19.0.2.1</version>
-				</dependency>
-				<dependency>
-					<groupId>org.openjfx</groupId>
-					<artifactId>javafx-swing</artifactId>
-					<version>19.0.2.1</version>
-				</dependency>
-			</dependencies>
-		</profile>
-	</profiles>
 
 	<build>
 		<plugins>

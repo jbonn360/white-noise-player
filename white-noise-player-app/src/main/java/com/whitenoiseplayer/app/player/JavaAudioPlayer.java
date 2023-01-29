@@ -14,7 +14,7 @@ import javafx.embed.swing.JFXPanel;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
-@Component
+//@Component
 public class JavaAudioPlayer implements AudioPlayer {
 	private final static Logger LOG = LoggerFactory.getLogger(JavaAudioPlayer.class);
 

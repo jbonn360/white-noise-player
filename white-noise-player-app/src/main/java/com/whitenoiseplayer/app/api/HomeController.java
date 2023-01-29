@@ -40,7 +40,7 @@ public class HomeController {
 	@PatchMapping("/masterVolume")
 	@ResponseStatus(HttpStatus.OK)
 	public void setMasterVolume(double volume) {
-		audioPlayerService.setPlayerVolume(volume);
+		audioPlayerService.setPlayerMasterVolume(volume);
 	}
 	
 	@PatchMapping("/playbackOverride")

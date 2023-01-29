@@ -38,8 +38,9 @@ public class AudioPlayerService {
 		return audioPlayer.getVolume();
 	}
 
-	public void setPlayerVolume(double volume) {
-		audioPlayer.setVolume(volume);
+	public void setPlayerMasterVolume(double volume) {
+		audioPlayer.setMasterVolumeMultiplier(volume);
+		audioPlayer.setVolume(audioPlayer.getVolume());
 	}
 	
 	public double getPlayerMasterVolume() {
