@@ -24,7 +24,7 @@ public class HomeController {
 	public ModelAndView Index() {
 		final ModelAndView modelAndView = new ModelAndView("home");
 
-		modelAndView.addObject("audioPlayerState", audioPlayerService.isPlayerActive());
+		modelAndView.addObject("audioPlayerState", audioPlayerService.isActive());
 		modelAndView.addObject("masterVolumeLevel", audioPlayerService.getPlayerMasterVolume());
 		modelAndView.addObject("playbackOverride", audioPlayerService.isPlaybackOverride());
 

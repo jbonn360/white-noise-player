@@ -44,19 +44,19 @@ public class AudioPlayerService {
 	}
 	
 	public double getPlayerMasterVolume() {
-		return this.audioPlayer.getMasterVolumeMultiplier();
+		return audioPlayer.getMasterVolumeMultiplier();
 	}
 	
-	public boolean isPlayerActive() {
-		return this.audioPlayer.isPlaying();
+	public boolean isActive() {
+		return audioPlayer.isPlaying() || volumeManagerExecutor.isExecutionScheduled();
 	}
 	
 	public boolean isPlaybackOverride() {
-		return this.playbackOverride;
+		return playbackOverride;
 	}
 
 	public boolean setPlaybackOverride(boolean value) {
-		this.playbackOverride = value;
+		playbackOverride = value;
 		
 		if(!value) {
 			audioPlayer.stopAudio();
