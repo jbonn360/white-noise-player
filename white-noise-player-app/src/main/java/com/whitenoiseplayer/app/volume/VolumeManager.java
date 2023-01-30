@@ -58,7 +58,7 @@ public class VolumeManager implements Runnable {
 		ZonedDateTime nextTopOfHour = getNextTopOfHour(now);
 
 		if (isInFadeInOutZone(now)) {
-			ZonedDateTime fiveMinutesFromNow = now.plus(1, ChronoUnit.MINUTES);
+			ZonedDateTime fiveMinutesFromNow = now.plus(5, ChronoUnit.MINUTES);
 			return fiveMinutesFromNow.isBefore(nextTopOfHour) ? fiveMinutesFromNow : nextTopOfHour;
 		} else {
 			if (schedule.getLastScheduledVolume(now) > 0)

@@ -12,7 +12,7 @@ import javazoom.jlgui.basicplayer.BasicPlayer;
 import javazoom.jlgui.basicplayer.BasicPlayerException;
 import javazoom.jlgui.basicplayer.BasicPlayerListener;
 
-@Component
+//@Component
 public class BPAudioPlayer implements AudioPlayer {
 	private final static Logger LOG = LoggerFactory.getLogger(JavaAudioPlayer.class);
 
@@ -43,7 +43,7 @@ public class BPAudioPlayer implements AudioPlayer {
 			LOG.error("Error occurred while initialising basic audio player", e);
 		}
 		
-		this.player.addBasicPlayerListener(new BPAudioPlayerLooper());		
+		this.player.addBasicPlayerListener(new BPAudioPlayerLooper(this));		
 	}
 
 	@Override

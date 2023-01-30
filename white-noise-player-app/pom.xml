@@ -70,6 +70,12 @@
 		    <artifactId>basicplayer</artifactId>
 		    <version>3.0.0.0</version>
 		</dependency>
+		
+		<dependency>
+		    <groupId>uk.co.caprica</groupId>
+		    <artifactId>vlcj</artifactId>
+		    <version>3.12.1</version>
+		</dependency>
 	</dependencies>
 
 	<build>
